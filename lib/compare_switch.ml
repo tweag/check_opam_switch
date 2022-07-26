@@ -15,7 +15,7 @@ let fail ?(from_overlay = false) opam_export_filepath
   print_error_message ();
   Format.printf
     "Current switch should probably be updated using 'opam switch import \
-     src/opam.export'.\n";
+     opam.export'.\n";
   if from_overlay then
     (* See https://github.com/ocaml/opam/issues/5173 *)
     Format.printf "Potentially twice in a row due to an opam bug.\n";
@@ -82,5 +82,14 @@ let compare_with_current_switch opam_export_path : unit =
     Commands.run_string "opam" [| "opam"; "switch"; "export"; "-" |]
   in
   let switch_current = OpamFile.SwitchExport.read_from_string output in
-  let switch_file = switch_export_of_path opam_export_path in
+  let switch_file =
+    try switch_export_of_path opam_export_path
+    with e ->
+      let () =
+        Format.printf "check_opam_switch: error reading opam.export \n"
+      in
+      raise e
+  in
   compare_switch_states opam_export_path switch_file switch_current
+
+module Workspace_root = Workspace_root

@@ -7,11 +7,15 @@ export`.
   the current switch at the specified version.
 
 - The `dune_wrapper` binary does this same check before invocating dune.
-It recovers the path of the `opam.export` file in the `DUNE_WRAPPER_OPAM_FILE` environment variable
-(and does not do the check is this variable is not defined).
+By default, it looks for the `opam.export` file at the root of the dune project,
+unless the `DUNE_WRAPPER_OPAM_FILE` environment variable is set to the path of another file.
 
-For instance, `dune_wrapper` can be used with the following alias:
+In order to continue using dune as usual but be warned early that the opam switch needs to be updated, we can use one of the following aliases.
+```bash
+dune=dune_wrapper #if the `opam.export` file is at the root of the dune project, 
 ```
-dune="DUNE_WRAPPER_OPAM_FILE=/path/to/opam.export dune_wrapper"
+or
+
+```bash
+dune="DUNE_WRAPPER_OPAM_FILE=/path/to/opam.export dune_wrapper" #otherwise
 ```
-This way you can continue to use dune as usual but be warned early that the opam switch needs to be updated.

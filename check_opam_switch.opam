@@ -7,8 +7,9 @@ description:
 maintainer: ["yves.stan.lecornec@tweag.io"]
 depends: [
   "dune" {>= "3.3"}
-  "opam-core" {= "2.1.2"}
-  "opam-format" {= "2.1.2"}
+  "opam-core" {>= "2.0.0"}
+  "opam-format" {>= "2.0.0"}
+  "minicli" {>= "5.0.0"}
   "odoc" {with-doc}
 ]
 build: [
